@@ -73,7 +73,7 @@ export default function BookingPage() {
           animate={{ y: 0, opacity: 1 }}
           transition={{ duration: 0.5, delay: 0.2 }}
         >
-          Select your preferred class and date. We can't wait to dance with you!
+          Select your preferred class and date. We can&apos;t wait to dance with you!
         </motion.p>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12 max-w-4xl mx-auto">

@@ -45,7 +45,7 @@ export const Testimonials = () => {
               <div className="flex-grow-0 flex-shrink-0 basis-full min-w-0 px-4" key={index}>
                 <div className="bg-[#111] p-8 rounded-lg max-w-3xl mx-auto">
                   <p className="text-xl italic text-brand-neutral mb-6">
-                    "{testimonial.quote}"
+                    &quot;{testimonial.quote}&quot;
                   </p>
                   <p className="font-bold text-lg text-brand-gold">{testimonial.name}</p>
                   <p className="text-sm">{testimonial.title}</p>

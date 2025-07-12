@@ -23,7 +23,7 @@ const Hero = () => {
   Unleash Your <span className="bg-gradient-to-r from-yellow-300 to-brand-gold text-transparent bg-clip-text">Rhythm</span>
 </h1>
         <p className="mt-4 max-w-2xl text-lg md:text-xl text-brand-neutral">
-          From beginners to pros, find your beat at Kenya's leading dance studio.
+          From beginners to pros, find your beat at Kenya&apos;s leading dance studio.
           Join a class or learn online at your own pace.
         </p>
         

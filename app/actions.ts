@@ -109,7 +109,7 @@ interface ContactFormData {
 
 export async function sendContactMessage(formData: ContactFormData) {
   try {
-    const { data, error } = await resend.emails.send({
+    const { _data, error } = await resend.emails.send({
       from: 'Contact Form <allstarz_booking@jay1.buzz>', // Email from verified Resend domain
       to: ['allstazentertainment@gmail.com'], // IMPORTANT: Replace with the email you want messages sent to
       subject: `New Message from ${formData.name}: ${formData.subject}`,

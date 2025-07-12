@@ -42,7 +42,7 @@ const PaystackButton = ({ video, user }: PaystackButtonProps) => {
   const initializePayment = usePaystackPayment(config);
 
   // Define what happens on successful payment
-  const onSuccess = (reference: any) => {
+  const onSuccess = (_reference: object) => {
     if (user) {
       recordPurchase(user.id, video.id).then(result => {
         if (result.error) {
@@ -53,7 +53,6 @@ const PaystackButton = ({ video, user }: PaystackButtonProps) => {
       });
     }
   };
-
   // Define what happens when the modal is closed
   const onClose = () => {
     console.log('Payment modal closed.');
