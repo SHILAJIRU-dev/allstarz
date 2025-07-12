@@ -7,8 +7,9 @@ import { supabase } from '@/lib/supaBaseClient';
 
 const InactivityTimeout = () => {
   const router = useRouter();
-  // Use a ref to hold the timer ID so it persists across re-renders
-  const timerRef = useRef<NodeJS.Timeout>();
+  // --- THIS IS THE FIX ---
+  // Initialize useRef with null so TypeScript knows its starting value.
+  const timerRef = useRef<NodeJS.Timeout | null>(null);
 
   // The function to log the user out
   const logout = useCallback(() => {
@@ -42,7 +43,7 @@ const InactivityTimeout = () => {
     const startTimerAndListeners = async () => {
       // First, check if a user is actually logged in on the client
       const { data: { session } } = await supabase.auth.getSession();
-
+      
       if (session) {
         // If logged in, reset the timer and add event listeners
         resetTimer();
