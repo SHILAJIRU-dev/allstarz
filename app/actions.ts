@@ -12,7 +12,6 @@ export async function recordPurchase(userId: string, videoId: number) {
     return { error: "User ID and Video ID are required." };
   }
   const supabase = createClient();
-  // FIX: Removed unused 'data' variable
   const { error } = await supabase
     .from('user_purchases')
     .insert([{ user_id: userId, video_id: videoId }]);
@@ -43,14 +42,12 @@ export async function createBooking(formData: BookingData) {
     booking_date: formData.bookingDate.toISOString().split('T')[0],
     user_id: user?.id || null,
   };
-  // FIX: Removed unused 'data' variable
   const { error: dbError } = await supabase.from('bookings').insert(bookingDataToInsert);
   if (dbError) {
     console.error('Supabase booking error:', dbError);
     return { error: 'There was an error submitting your booking. Please try again.' };
   }
   try {
-    // FIX: Removed unused 'data' variable
     const { error: emailError } = await resend.emails.send({
       from: 'Booking Bot <onboarding@resend.dev>',
       to: ['your-email@example.com'],
@@ -76,13 +73,22 @@ interface ContactFormData {
 
 export async function sendContactMessage(formData: ContactFormData) {
   try {
-    // FIX: Removed unused 'data' variable
     const { error } = await resend.emails.send({
       from: 'Contact Form <onboarding@resend.dev>',
       to: ['your-email@example.com'],
       subject: `New Message from ${formData.name}: ${formData.subject}`,
-      reply_to: formData.email,
-      html: `<p>Details...</p>`
+      // --- THIS IS THE FIX ---
+      // Changed 'reply_to' to 'replyTo' (camelCase)
+      replyTo: formData.email,
+      html: `
+        <p>You received a new message from your website's contact form.</p>
+        <p><strong>Name:</strong> ${formData.name}</p>
+        <p><strong>Email:</strong> ${formData.email}</p>
+        <p><strong>Subject:</strong> ${formData.subject}</p>
+        <hr>
+        <p><strong>Message:</strong></p>
+        <p>${formData.message}</p>
+      `
     });
     if (error) {
       console.error('Resend contact email error:', error);
