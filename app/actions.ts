@@ -4,6 +4,7 @@
 import { createClient } from "@/utils/supabase/server";
 import { revalidatePath } from "next/cache";
 import { Resend } from 'resend';
+import { createClient } from "@/utils/supabase/server";
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
