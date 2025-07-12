@@ -8,15 +8,11 @@ import { eventsData } from '@/lib/event-data';
 import Link from "next/link";
 
 // --- THIS IS THE FIX ---
-// We are using a more explicit type definition for the page props.
-type PageProps = {
-  params: { slug: string };
-};
-
-export default function EventDetailPage({ params }: PageProps) {
+// Instead of creating a separate 'PageProps' type, we define the props inline.
+// This avoids conflicts with Next.js's auto-generated types during the build.
+export default function EventDetailPage({ params }: { params: { slug: string } }) {
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
   
-  // Asserting the type for the slug to work with the eventsData object
   const event = eventsData[params.slug as keyof typeof eventsData];
 
   if (!event) {
