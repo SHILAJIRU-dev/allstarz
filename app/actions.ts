@@ -1,10 +1,11 @@
 // ./app/actions.ts
 "use server";
 
+// --- THIS IS THE FIX ---
+// Ensure 'createClient' is only imported ONCE at the top of the file.
 import { createClient } from "@/utils/supabase/server";
 import { revalidatePath } from "next/cache";
 import { Resend } from 'resend';
-import { createClient } from "@/utils/supabase/server";
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
@@ -12,7 +13,7 @@ export async function recordPurchase(userId: string, videoId: number) {
   if (!userId || !videoId) {
     return { error: "User ID and Video ID are required." };
   }
-  const supabase = await createClient(); // <-- Added await
+  const supabase = await createClient();
   const { error } = await supabase
     .from('user_purchases')
     .insert([{ user_id: userId, video_id: videoId }]);
@@ -33,7 +34,7 @@ interface BookingData {
 }
 
 export async function createBooking(formData: BookingData) {
-  const supabase = await createClient(); // <-- Added await
+  const supabase = await createClient();
   const { data: { user } } = await supabase.auth.getUser();
   const bookingDataToInsert = {
     name: formData.name,
