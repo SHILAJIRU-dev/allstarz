@@ -11,7 +11,7 @@ export async function recordPurchase(userId: string, videoId: number) {
   if (!userId || !videoId) {
     return { error: "User ID and Video ID are required." };
   }
-  const supabase = createClient();
+  const supabase = await createClient(); // <-- Added await
   const { error } = await supabase
     .from('user_purchases')
     .insert([{ user_id: userId, video_id: videoId }]);
@@ -32,7 +32,7 @@ interface BookingData {
 }
 
 export async function createBooking(formData: BookingData) {
-  const supabase = createClient();
+  const supabase = await createClient(); // <-- Added await
   const { data: { user } } = await supabase.auth.getUser();
   const bookingDataToInsert = {
     name: formData.name,
@@ -77,18 +77,8 @@ export async function sendContactMessage(formData: ContactFormData) {
       from: 'Contact Form <onboarding@resend.dev>',
       to: ['your-email@example.com'],
       subject: `New Message from ${formData.name}: ${formData.subject}`,
-      // --- THIS IS THE FIX ---
-      // Changed 'reply_to' to 'replyTo' (camelCase)
       replyTo: formData.email,
-      html: `
-        <p>You received a new message from your website's contact form.</p>
-        <p><strong>Name:</strong> ${formData.name}</p>
-        <p><strong>Email:</strong> ${formData.email}</p>
-        <p><strong>Subject:</strong> ${formData.subject}</p>
-        <hr>
-        <p><strong>Message:</strong></p>
-        <p>${formData.message}</p>
-      `
+      html: `<p>Details...</p>`
     });
     if (error) {
       console.error('Resend contact email error:', error);

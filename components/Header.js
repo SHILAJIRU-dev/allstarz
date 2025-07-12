@@ -2,10 +2,10 @@
 import Link from 'next/link';
 import { createClient } from '@/utils/supabase/server';
 import LogoutButton from './LogoutButton';
-import MobileMenu from './MobileMenu'; // <-- Import the new client component
+import MobileMenu from './MobileMenu';
 
 export default async function Header() {
-  const supabase = createClient();
+  const supabase = await createClient(); // <-- Added await
   const { data: { user } } = await supabase.auth.getUser();
 
   return (
@@ -15,10 +15,9 @@ export default async function Header() {
           <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" viewBox="0 0 24 24" fill="currentColor">
             <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
           </svg>
-          <span>All Starz Dance Company</span>
+          <span>All Starz</span>
         </Link>
         
-        {/* Desktop Navigation */}
         <nav className="hidden md:flex items-center space-x-6">
           <Link href="/" className="hover:text-brand-gold transition-colors">Home</Link>
           <Link href="/classes" className="hover:text-brand-gold transition-colors">Classes</Link>
@@ -28,7 +27,6 @@ export default async function Header() {
           <Link href="/about" className="hover:text-brand-gold transition-colors">About</Link>
         </nav>
 
-        {/* Desktop Buttons */}
         <div className="hidden md:flex items-center gap-4">
           {user ? (
             <>
@@ -47,8 +45,6 @@ export default async function Header() {
           )}
         </div>
         
-        {/* --- THIS IS THE FIX --- */}
-        {/* Render the MobileMenu component, passing the user's status to it */}
         <MobileMenu user={user} />
       </div>
     </header>

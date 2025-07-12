@@ -6,14 +6,13 @@ import LogoutButton from '@/components/LogoutButton'
 export const dynamic = 'force-dynamic';
 
 export default async function AccountPage() {
-  const supabase = createClient();
+  const supabase = await createClient(); // <-- Added await
   const { data, error: authError } = await supabase.auth.getUser();
   
   if (authError || !data?.user) {
     redirect('/login');
   }
 
-  // --- FIX: Removed the unused 'error' variable completely ---
   const { data: profile } = await supabase
     .from('profiles')
     .select('username')
