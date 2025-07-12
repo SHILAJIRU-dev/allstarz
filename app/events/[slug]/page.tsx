@@ -7,8 +7,16 @@ import Image from "next/image";
 import { eventsData } from '@/lib/event-data';
 import Link from "next/link";
 
-export default function EventDetailPage({ params }: { params: { slug: string } }) {
+// --- THIS IS THE FIX ---
+// We are using a more explicit type definition for the page props.
+type PageProps = {
+  params: { slug: string };
+};
+
+export default function EventDetailPage({ params }: PageProps) {
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
+  
+  // Asserting the type for the slug to work with the eventsData object
   const event = eventsData[params.slug as keyof typeof eventsData];
 
   if (!event) {
@@ -34,8 +42,7 @@ export default function EventDetailPage({ params }: { params: { slug: string } }
         >
           {event.description}
         </motion.p>
-
-        {/* Image Grid */}
+        
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
           {event.images.map((image) => (
             <motion.div
@@ -51,7 +58,6 @@ export default function EventDetailPage({ params }: { params: { slug: string } }
           ))}
         </div>
 
-         {/* Lightbox Modal */}
         <AnimatePresence>
           {selectedImage && (
             <motion.div
@@ -68,7 +74,7 @@ export default function EventDetailPage({ params }: { params: { slug: string } }
             </motion.div>
           )}
         </AnimatePresence>
-
+        
         <div className="text-center mt-16">
             <Link href="/gallery" className="text-brand-gold hover:underline">
                 &larr; Back to Galleries
