@@ -13,8 +13,8 @@ export default async function AccountPage() {
     redirect('/login');
   }
 
-  // FIX: Renamed 'error' to '_profileError' to mark it as unused
-  const { data: profile, error: _profileError } = await supabase
+  // --- FIX: Removed the unused 'error' variable completely ---
+  const { data: profile } = await supabase
     .from('profiles')
     .select('username')
     .eq('id', data.user.id)
