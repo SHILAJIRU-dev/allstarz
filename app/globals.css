@@ -1,0 +1,11 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  background-color: #000000;
+  /* This uses a very subtle, seamless noise texture */
+  background-image: url('https://www.transparenttextures.com/patterns/black-linen.png');
+  background-repeat: repeat;
+}
+
